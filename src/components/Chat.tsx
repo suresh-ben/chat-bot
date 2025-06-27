@@ -6,22 +6,13 @@ import { chatWithBot } from "@/app/actions/chat";
 import { toast } from 'react-toastify';
 import Message from "@/config/types/Message";
 import ReactMarkdown from 'react-markdown';
+import MessageBox from "./MessageBox";
 
 export default function Chat() {
 
     const [allMessages, setAllMessages] = useState<Message[]>([]);
-    const [message, setMessage] = useState<string>("");
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [isBotTyping, setIsBotTyping] = useState(false);
     const messagesContainer = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const textarea = textareaRef.current;
-        if (textarea) {
-            textarea.style.height = "auto"; // reset height
-            textarea.style.height = `${textarea.scrollHeight}px`; // set to scroll height
-        }
-    }, [message]);
 
     const scrollToBottomMessages = () => {
          setTimeout(() => {
@@ -30,7 +21,7 @@ export default function Chat() {
         }, 500);
     };
 
-    const handleSend = async () => {
+    const handleSend = async (message: string) => {
         if(!message) return;
 
         // scroll to bottom
@@ -39,7 +30,6 @@ export default function Chat() {
         const _tempAllMessages = [...allMessages];
         _tempAllMessages.push({ content: message, role: "user", time: new Date().toLocaleTimeString() });
         setAllMessages(_tempAllMessages);
-        setMessage("");
 
         try {
             setIsBotTyping(true);
@@ -105,22 +95,7 @@ export default function Chat() {
                 }
             </AnimatePresence>
 
-            <div className="bg-[#404045] p-3 rounded-4xl w-[90%]">
-                <textarea
-                    ref={textareaRef}
-                    rows={1}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="w-full outline-none resize-none overflow-hidden mb-1 p-2"
-                    placeholder="Message Chatbot"
-                />
-
-                <div className="flex justify-end">
-                    <button onClick={handleSend} className={`w-[2rem] aspect-square relative rounded-full ${message? "bg-[#4C6BFE]" : "bg-[#71717A]"}`}>
-                        <Image src={message? "/arrow_white.png" : "/arrow.png"} alt="Send" fill className="p-1 -rotate-90" />
-                    </button>
-                </div>
-            </div>
+            <MessageBox handleSend={handleSend} isBotTyping={isBotTyping} />
         </div>
     );
 }
