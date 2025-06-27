@@ -4,8 +4,8 @@ import Link from "next/link";
 import { JSX } from "react";
 
 export default function Home(): JSX.Element {
-    return <div className="w-screen h-screen flex flex-col sm:flex-row">
-        <div className="h-[4rem] sm:h-screen sm:w-[4rem] flex sm:flex-col justify-between items-center px-6 sm:py-6 bg-[#202327]">
+    return <div className="w-screen h-full flex flex-col sm:flex-row">
+        <div className="h-[4rem] sm:h-full sm:w-[4rem] flex sm:flex-col justify-between items-center px-6 sm:py-6 bg-[#202327]">
             <Link href={"/"} className="w-[2.5rem] aspect-square relative">
                 <Image 
                     src="/chatbot.png"
