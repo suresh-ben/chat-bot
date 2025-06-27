@@ -71,7 +71,7 @@ export default function Chat() {
                                 <Image src="/chatbot.png" alt="Chatbot" fill />
                             </div>
 
-                            <p className="font-bold text-lg sm:font-semibold sm:text-2xl">Hi, I'm Chatbot.</p>
+                            <p className="font-bold text-lg sm:font-semibold sm:text-2xl">Hi, I&apos;m Chatbot.</p>
                         </div>
 
                         <p>How can I help you?</p>
@@ -170,7 +170,7 @@ function BotMessage({ messgae, isNew, scrollToBottomMessages }: { messgae: Messa
 
             return () => clearInterval(interval);
         }
-    }, []);
+    }, [isNew, messgae.content, scrollToBottomMessages]);
 
     return <div className="flex gap-2 w-full">
         <div className="w-[2.2rem] h-[2.2rem] relative rounded-full border border-gray-300 hidden sm:block">
